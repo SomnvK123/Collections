@@ -38,7 +38,6 @@ public class Main {
                     }
 
                     case LIST_HISTORY -> {
-                        System.out.println("History of searched words: ");
                         manager.listHistory();
                     }
 
@@ -52,6 +51,12 @@ public class Main {
                     case EXIT -> {
                         System.out.println("Exit");
                         return; // Exit the loop & program
+                    }
+
+                    case SEARCH_WITH_PREFIX -> {
+                        System.out.print("Enter prefix: ");
+                        String prefix = sc.nextLine();
+                        manager.searchWithPrefix(prefix);
                     }
                 }
             } catch (Exception e) {

@@ -6,6 +6,7 @@ public enum Action {
     SEARCH_WORD(3, "SEARCH_WORD"),
     LIST_WORDS(4, "LIST_WORDS"),
     LIST_HISTORY(5, "LIST_HISTORY"),
+    SEARCH_WITH_PREFIX(6, "SEARCH_WITH_PREFIX"),
     EXIT(0, "EXIT");
 
     private final int id;

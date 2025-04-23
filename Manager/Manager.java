@@ -15,9 +15,8 @@ public class Manager {
 
     public void addSynonym(String word, String synonym) {
         if (dictionary.containsKey(word.toLowerCase())) { // check word exists
-            Word existingWord = dictionary.get(word.toLowerCase()); // get the word object
-            existingWord.addSynonym(synonym.toLowerCase()); // add synonym to the word object
-            System.out.println("Added synonym '" + synonym + "' to word '" + word + "'.");
+            Word existingWord = dictionary.get(word.toLowerCase()); // get word object
+            System.out.println("Word '" + word + "' found in the dictionary.");
             if (!dictionary.containsKey(synonym.toLowerCase())) { // synonym not in dictionary
                 dictionary.put(synonym.toLowerCase(), new Word(existingWord.getMeaning())); // add synonym to dictionary
                 System.out.println("Added synonym '" + synonym + "' with meaning '" + existingWord.getMeaning() + "'.");
@@ -67,6 +66,20 @@ public class Manager {
         System.out.println("History of searched words:");
         for (String word : history) {
             System.out.println(word);
+        }
+    }
+
+    public void searchWithPrefix(String prefix) {
+        List<String> matchingWords = new ArrayList<>();
+        for (String word : dictionary.keySet()) {
+            if (word.startsWith(prefix.toLowerCase())) {
+                matchingWords.add(word);
+            }
+        }
+        if (matchingWords.isEmpty()) {
+            System.out.println("No words found with prefix '" + prefix + "'.");
+        } else {
+            System.out.println("Words with prefix '" + prefix + "': " + matchingWords);
         }
     }
 
