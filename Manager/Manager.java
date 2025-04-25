@@ -87,36 +87,34 @@ public class Manager {
         }
     }
 
-    // public void suggestWords(String word) {
-    // String prefix = word.toLowerCase();
-    // SortedSet<String> tail = suggest.tailSet(prefix); // get words starting with
-    // prefix
-    // List<String> suggestions = new ArrayList<>();
-
-    // for (String words : tail) {
-    // if (!words.startsWith(prefix))
-    // break;
-    // suggestions.add(word);
-    // }
-
-    // if (suggestions.isEmpty()) {
-    // System.out.println("No suggestions found for '" + word + "'.");
-    // } else {
-    // System.out.println("Suggestions for '" + word + "': " + suggestions);
-    // }
-    // }
+    private int compareWord(String a, String b) {
+        int len = Math.min(a.length(), b.length()); // So sánh độ dài của 2 từ
+        for (int i = 0; i < len; i++) { // duyet với vòng lặp
+            if (a.charAt(i) != b.charAt(i)) { // So sánh từng ký tự của 2 từ với nhau // Nếu khác nhau thì trả về vị trí
+                                              // khác nhau
+                System.out.println(
+                        "The words differ at position " + i + ": '" + a.charAt(i) + "' vs '" + b.charAt(i) + "'.");
+                return i;
+            }
+            System.out.println("The words are the same up to position " + len + ".");
+        }
+        return len;
+    }
 
     public void suggestWords(String prefix) {
-        String lowerPrefix = prefix.toLowerCase(); // Chuẩn hóa prefix thành chữ thường
+        String prefixx = prefix.toLowerCase(); // Chuẩn hóa prefix thành chữ thường
+        int compare = 0; // Biến để lưu vị trí khác nhau giữa prefix và từ trong danh sách gợi ý
         List<String> suggestions = new ArrayList<>();
 
         for (String word : suggest) {
-            int compareResult = word.compareTo(lowerPrefix);
-
-            // Nếu compareResult >= 0 và word bắt đầu bằng lowerPrefix, thêm vào danh sách
-            // gợi ý
-            if (compareResult >= 0 && word.startsWith(lowerPrefix)) {
-                suggestions.add(word);
+            int compareResult = compareWord(prefixx, word); // So sánh prefix với từ trong danh sách gợi ý
+            if (compareResult > compare) { // Nếu vị trí khác nhau > vị trí hien tại
+                suggestions.clear(); // Xóa tất cả các từ trong danh sách gợi ý
+                suggestions.add(word); // Thêm vào danh sách gợi ý
+                compare = compareResult; // Câp nhật vị trí khác nhau
+            } else if (compareResult == compare && compareResult > 0) { // Nếu vị trí khác nhau = vị trí hiện tại && vị
+                                                                        // trí khác nhau > 0
+                suggestions.add(word); // Thêm vào danh sách gợi ý
             }
         }
 
