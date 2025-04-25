@@ -93,10 +93,16 @@ public class Manager {
             if (a.charAt(i) != b.charAt(i)) { // So sánh từng ký tự của 2 từ với nhau // Nếu khác nhau thì trả về vị trí
                                               // khác nhau
                 System.out.println(
-                        "The words differ at position " + i + ": '" + a.charAt(i) + "' vs '" + b.charAt(i) + "'.");
+                        "The words differ at position " + i + ": '" + a.charAt(i) + "' vs '" + b.charAt(i) + "'."); // In
+                                                                                                                    // ra
+                                                                                                                    // vị
+                                                                                                                    // trí
+                                                                                                                    // khác
+                                                                                                                    // nhau
                 return i;
             }
-            System.out.println("The words are the same up to position " + len + ".");
+            System.out.println("The words are the same up to position " + len + "."); // Nếu giống nhau thì trả về độ
+                                                                                      // dài
         }
         return len;
     }
