@@ -107,22 +107,24 @@ public class Manager {
     // }
 
     public void suggestWords(String prefix) {
-        String lowerPrefix = prefix.toLowerCase();
-        SortedSet<String> tail = suggest.tailSet(lowerPrefix);
-        List<String> result = new ArrayList<>();
+        String lowerPrefix = prefix.toLowerCase(); // Chuẩn hóa prefix thành chữ thường
+        List<String> suggestions = new ArrayList<>();
 
-        for (String word : tail) {
-            if (!word.startsWith(lowerPrefix))
-                break;
-            result.add(word);
-            if (result.size() >= 5)
-                break; // Giới hạn số gợi ý
+        for (String word : suggest) {
+            int compareResult = word.compareTo(lowerPrefix);
+
+            // Nếu compareResult >= 0 và word bắt đầu bằng lowerPrefix, thêm vào danh sách
+            // gợi ý
+            if (compareResult >= 0 && word.startsWith(lowerPrefix)) {
+                suggestions.add(word);
+            }
         }
 
-        if (result.isEmpty()) {
-            System.out.println("No suggestions for prefix '" + prefix + "'.");
+        // In kết quả gợi ý
+        if (suggestions.isEmpty()) {
+            System.out.println("No suggestions for '" + prefix + "'.");
         } else {
-            System.out.println("Suggestions for '" + prefix + "': " + result);
+            System.out.println("Did you mean: " + suggestions);
         }
     }
 
