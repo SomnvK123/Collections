@@ -7,6 +7,7 @@ public enum Action {
     LIST_WORDS(4, "LIST_WORDS"),
     LIST_HISTORY(5, "LIST_HISTORY"),
     SEARCH_WITH_PREFIX(6, "SEARCH_WITH_PREFIX"),
+    SEARCH_WITH_SIMILAR_WORDS(7, "SEARCH_WITH_SIMILAR_WORDS"),
     EXIT(0, "EXIT");
 
     private final int id;
@@ -33,4 +34,5 @@ public enum Action {
         }
         throw new IllegalArgumentException("Invalid action ID: " + id);
     }
+
 }

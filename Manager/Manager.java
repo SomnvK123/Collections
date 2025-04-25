@@ -6,10 +6,13 @@ import java.util.*;
 public class Manager {
     private final Map<String, Word> dictionary = new HashMap<>();
     private final Deque<String> history = new ArrayDeque<>();
+    private final TreeSet<String> suggest = new TreeSet<>();
     private final int MAX_HISTORY = 5;
 
     public void addWord(String word, String meaning) {
-        dictionary.put(word.toLowerCase(), new Word(meaning.toLowerCase()));
+        String wordd = word.toLowerCase();
+        dictionary.put(wordd, new Word(meaning.toLowerCase()));
+        suggest.add(wordd); // add word to suggest set
         System.out.println("Added word '" + word + "' with meaning '" + meaning + "'.");
     }
 
@@ -48,6 +51,7 @@ public class Manager {
             System.out.println("Synonyms: " + existingWord.getSynonyms());
         } else {
             System.out.println("Word '" + word + "' not found in the dictionary.");
+            suggestWords(word.toLowerCase()); // suggest words based on the input
         }
     }
 
@@ -80,6 +84,45 @@ public class Manager {
             System.out.println("No words found with prefix '" + prefix + "'.");
         } else {
             System.out.println("Words with prefix '" + prefix + "': " + matchingWords);
+        }
+    }
+
+    // public void suggestWords(String word) {
+    // String prefix = word.toLowerCase();
+    // SortedSet<String> tail = suggest.tailSet(prefix); // get words starting with
+    // prefix
+    // List<String> suggestions = new ArrayList<>();
+
+    // for (String words : tail) {
+    // if (!words.startsWith(prefix))
+    // break;
+    // suggestions.add(word);
+    // }
+
+    // if (suggestions.isEmpty()) {
+    // System.out.println("No suggestions found for '" + word + "'.");
+    // } else {
+    // System.out.println("Suggestions for '" + word + "': " + suggestions);
+    // }
+    // }
+
+    public void suggestWords(String prefix) {
+        String lowerPrefix = prefix.toLowerCase();
+        SortedSet<String> tail = suggest.tailSet(lowerPrefix);
+        List<String> result = new ArrayList<>();
+
+        for (String word : tail) {
+            if (!word.startsWith(lowerPrefix))
+                break;
+            result.add(word);
+            if (result.size() >= 5)
+                break; // Giới hạn số gợi ý
+        }
+
+        if (result.isEmpty()) {
+            System.out.println("No suggestions for prefix '" + prefix + "'.");
+        } else {
+            System.out.println("Suggestions for '" + prefix + "': " + result);
         }
     }
 
