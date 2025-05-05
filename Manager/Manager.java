@@ -7,7 +7,6 @@ public class Manager {
     private final Map<String, Word> dictionary = new HashMap<>();
     private final Deque<String> history = new ArrayDeque<>();
     private final TreeSet<String> suggest = new TreeSet<>();
-    private final int MAX_HISTORY = 5;
 
     public void addWord(String word, String meaning) {
         String wordd = word.toLowerCase();
@@ -56,7 +55,7 @@ public class Manager {
     }
 
     public void addToHistory(String word) {
-        if (history.size() == MAX_HISTORY) {
+        if (history.size() == 55) {
             history.removeFirst();
         }
         history.addLast(word);
@@ -89,37 +88,30 @@ public class Manager {
 
     private int compareWord(String a, String b) {
         int len = Math.min(a.length(), b.length()); // So sánh độ dài của 2 từ
-        for (int i = 0; i < len; i++) { // duyet với vòng lặp
-            if (a.charAt(i) != b.charAt(i)) { // So sánh từng ký tự của 2 từ với nhau // Nếu khác nhau thì trả về vị trí
-                                              // khác nhau
+        for (int i = 0; i < len; i++) {
+            if (a.charAt(i) != b.charAt(i)) { // so sanh ky tu
                 System.out.println(
-                        "The words differ at position " + i + ": '" + a.charAt(i) + "' vs '" + b.charAt(i) + "'."); // In
-                                                                                                                    // ra
-                                                                                                                    // vị
-                                                                                                                    // trí
-                                                                                                                    // khác
-                                                                                                                    // nhau
+                        "The words differ at position " + i + ": '" + a.charAt(i) + "' vs '" + b.charAt(i) + "'.");
                 return i;
             }
-            System.out.println("The words are the same up to position " + len + "."); // Nếu giống nhau thì trả về độ
-                                                                                      // dài
+            System.out.println("The words are the same up to position " + len + ".");
         }
         return len;
+
     }
 
     public void suggestWords(String prefix) {
         String prefixx = prefix.toLowerCase(); // Chuẩn hóa prefix thành chữ thường
-        int compare = 0; // Biến để lưu vị trí khác nhau giữa prefix và từ trong danh sách gợi ý
+        int compare = 0;
         List<String> suggestions = new ArrayList<>();
 
         for (String word : suggest) {
             int compareResult = compareWord(prefixx, word); // So sánh prefix với từ trong danh sách gợi ý
-            if (compareResult > compare) { // Nếu vị trí khác nhau > vị trí hien tại
-                suggestions.clear(); // Xóa tất cả các từ trong danh sách gợi ý
-                suggestions.add(word); // Thêm vào danh sách gợi ý
-                compare = compareResult; // Câp nhật vị trí khác nhau
-            } else if (compareResult == compare && compareResult > 0) { // Nếu vị trí khác nhau = vị trí hiện tại && vị
-                                                                        // trí khác nhau > 0
+            if (compareResult > compare) {
+                suggestions.clear();
+                suggestions.add(word);
+                compare = compareResult;
+            } else if (compareResult == compare && compareResult > 0) {
                 suggestions.add(word); // Thêm vào danh sách gợi ý
             }
         }
